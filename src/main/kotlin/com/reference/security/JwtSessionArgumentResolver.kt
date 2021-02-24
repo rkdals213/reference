@@ -27,7 +27,7 @@ class JwtSessionArgumentResolver(private val jwtService: JwtService, private val
         val request = webRequest.getNativeRequest(HttpServletRequest::class.java) ?: return null
         val key = if ((annotation?.value != null) and (annotation?.value != "")) annotation?.value else parameter.parameterName
 
-        val cookie = request.cookies?.firstOrNull { cookie -> COOKIE_KEY == cookie.name }
+        val cookie = request.cookies.firstOrNull { cookie -> COOKIE_KEY == cookie.name }
         val header = request.getHeader("Authorization")?.replace("Bearer", "")?.trim()
 
         val token = arrayOf(cookie?.value, header).filterNotNull().toTypedArray().first()

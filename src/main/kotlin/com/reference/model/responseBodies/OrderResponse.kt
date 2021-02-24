@@ -39,7 +39,6 @@ class SelectOrderResponse(page: Page<OrderDto>) {
 }
 
 class OrderResultResponse {
-    var result: Result = Result.FAIL
     var email: String = ""
     var name: String = ""
     var address: Address = Address()
@@ -54,7 +53,6 @@ class OrderResultResponse {
     constructor()
 
     constructor(order: Order) {
-        result = Result.SUCCESS
         email= order.member.email
         name = order.member.name
         address = order.delivery.address

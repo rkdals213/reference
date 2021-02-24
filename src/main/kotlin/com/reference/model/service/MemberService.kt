@@ -7,7 +7,6 @@ import com.reference.model.requestBodies.RegistRequest
 import com.reference.model.requestBodies.UpdateRequest
 import com.reference.model.responseBodies.LoginResponse
 import com.reference.model.responseBodies.RegistResponse
-import com.reference.model.responseBodies.Result
 import com.reference.model.responseBodies.UpdateResponse
 import org.mindrot.jbcrypt.BCrypt
 import org.springframework.stereotype.Service
@@ -20,8 +19,8 @@ class MemberService(
     fun login(loginRequest: LoginRequest): LoginResponse? {
         val memberResult = memberRepository.findByEmail(loginRequest.email)
         if (memberResult.isEmpty) return null
-        if(!BCrypt.checkpw(loginRequest.password, memberResult.get().password)) return null
-        return LoginResponse(Result.SUCCESS, memberResult.get().id, memberResult.get().name, memberResult.get().email, memberResult.get().address)
+        if (!BCrypt.checkpw(loginRequest.password, memberResult.get().password)) return null
+        return LoginResponse(memberResult.get().id, memberResult.get().name, memberResult.get().email, memberResult.get().address)
     }
 
     @Transactional
@@ -35,7 +34,7 @@ class MemberService(
         if (updateRequest.password.isNotEmpty()) memberResult.get().password = updateRequest.password
         memberResult.get().address = updateRequest.address
 
-        return UpdateResponse(Result.SUCCESS, memberResult.get().id, memberResult.get().name, memberResult.get().email, memberResult.get().address)
+        return UpdateResponse(memberResult.get().id, memberResult.get().name, memberResult.get().email, memberResult.get().address)
     }
 
     fun countByEmail(email: String): Int {
@@ -52,6 +51,6 @@ class MemberService(
         member.address = registRequest.address
 
         val result = memberRepository.save(member)
-        return RegistResponse(Result.SUCCESS, result.id, result.email, result.name, result.address)
+        return RegistResponse(result.id, result.email, result.name, result.address)
     }
 }
