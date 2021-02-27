@@ -10,8 +10,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
-class WebConfig(jwtService: JwtService) : WebMvcConfigurer {
-    private val jwtService: JwtService
+class WebConfig(private val jwtService: JwtService) : WebMvcConfigurer {
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(jwtInterceptor())
     }
@@ -32,9 +31,5 @@ class WebConfig(jwtService: JwtService) : WebMvcConfigurer {
 
     companion object {
         const val JWT_COOKIE_NAME = "my.test.jwt"
-    }
-
-    init {
-        this.jwtService = jwtService
     }
 }

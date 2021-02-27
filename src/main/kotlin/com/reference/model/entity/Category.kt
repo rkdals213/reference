@@ -29,7 +29,6 @@ class Category {
     @OneToMany(mappedBy = "parent")
     var child: MutableList<Category> = ArrayList()
 
-    //==연관관계 메서드==//
     fun addChildCategory(child: Category) {
         this.child.add(child)
         child.parent = this

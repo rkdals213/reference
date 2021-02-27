@@ -1,30 +1,31 @@
 package com.reference.model.responseBodies
 
 import com.reference.model.entity.Address
+import com.reference.model.entity.Member
 
-class LoginResponse(
-    var id: Long = 0,
-    var email: String = "",
-    var name: String = "",
-    var address: Address = Address()
-) {
+class LoginResponse(member: Member) {
+    var id: Long = member.id
+    var email: String = member.email
+    var name: String = member.name
+    var address: Address = member.address
     var token: String = ""
-    var expiration:String = ""
+    var expiration: String = ""
 }
 
-class UpdateResponse(
-    var id: Long = 0,
-    var email: String = "",
-    var name: String = "",
-    var address: Address = Address()
-) {
+class UpdateResponse(member: Member) {
+    var id: Long = member.id
+    var email: String = member.email
+    var name: String = member.name
+    var address: Address = member.address
     var token: String = ""
-    var expiration:String = ""
+    var expiration: String = ""
 }
 
 class RegistResponse(
-    var id: Long = 0,
-    var email: String = "",
-    var name: String = "",
-    var address: Address = Address()
-)
+    member: Member
+) {
+    var id: Long = member.id
+    var email: String = member.email
+    var name: String = member.name
+    var address: Address = member.address
+}

@@ -100,5 +100,4 @@ class ConsoleJwtService : JwtService {
             null
         }
     }
-
 }

@@ -56,8 +56,6 @@ class OrderRepositoryQDImpl(
 
         val result = content.map { o -> OrderDto(o) }.toList()
 
-        QOrder.order.delivery.status.eq(DeliveryStatus.READY)
-
         return PageableExecutionUtils.getPage(result, pageable) { countQuery.fetchCount() }
     }
 

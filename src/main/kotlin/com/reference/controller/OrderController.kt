@@ -31,7 +31,8 @@ class OrderController(
         return try {
             registOrderRequest.memberId = id
             val orderResultResponse = orderService.registOrder(registOrderRequest)
-            handleSuccess(orderResultResponse)
+            if (orderResultResponse != null) return handleSuccess(orderResultResponse)
+            handleFail("주문에 실패 했습니다")
         } catch (e: RuntimeException) {
             handleException(e)
         }
@@ -41,7 +42,8 @@ class OrderController(
     fun cancelOrder(@JwtClaim("info.id") id: Long, @RequestParam orderId: Long): ResponseEntity<Map<String, Any?>> {
         return try {
             val orderResultResponse = orderService.cancelOrder(id, orderId)
-            handleSuccess(orderResultResponse)
+            if (orderResultResponse != null) return handleSuccess(orderResultResponse)
+            handleFail("주문 취소에 실패 했습니다")
         } catch (e: RuntimeException) {
             handleException(e)
         }

@@ -10,10 +10,10 @@ import java.util.stream.Collectors
 
 class OrderDto(order: Order) {
     var orderId: Long = order.id
-    var name: String = order.member?.name!!
-    var orderDate: LocalDateTime = order.orderDate!!
-    var orderStatus: OrderStatus = order.status!!
-    var address: Address = order.delivery?.address!!
+    var name: String = order.member.name
+    var orderDate: LocalDateTime = order.orderDate
+    var orderStatus: OrderStatus? = order.status
+    var address: Address = order.delivery.address
     var orderItems: List<OrderItemDto> = order.orderItems.stream()
         .map { orderItem: OrderItem -> OrderItemDto(orderItem) }
         .collect(Collectors.toList())
@@ -38,24 +38,15 @@ class SelectOrderResponse(page: Page<OrderDto>) {
     }
 }
 
-class OrderResultResponse {
-    var email: String = ""
-    var name: String = ""
-    var address: Address = Address()
-    var orderItems: MutableList<OrderItemDto> = ArrayList()
+class OrderResultResponse (order: Order) {
+    var email = order.member.email
+    var name = order.member.name
+    var address = order.delivery.address
+    var orderItems = toOrderItemDtoList(order.orderItems)
 
     private fun toOrderItemDtoList(orderItems: MutableList<OrderItem>): MutableList<OrderItemDto> {
         val orderItemDtoList: MutableList<OrderItemDto> = ArrayList()
         for (i in orderItems) orderItemDtoList.add(OrderItemDto(i))
         return orderItemDtoList
-    }
-
-    constructor()
-
-    constructor(order: Order) {
-        email= order.member.email
-        name = order.member.name
-        address = order.delivery.address
-        orderItems = toOrderItemDtoList(order.orderItems)
     }
 }

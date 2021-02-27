@@ -16,12 +16,6 @@ abstract class Item {
 
     @ManyToMany(mappedBy = "items", fetch = FetchType.LAZY)
     var categories: MutableSet<Category> = HashSet()
-
-    fun deleteCategory() {
-        for (c in categories) {
-            c.items.remove(this)
-        }
-    }
     var deleted = false
 }
 

@@ -20,7 +20,7 @@ class ItemController(
     @GetMapping("")
     fun selectItem(selectItemRequest: SelectItemRequest, pageable: Pageable): ResponseEntity<Map<String, Any?>> {
         return try {
-            val itemResponse: ItemResponse = itemService.findByCondition(selectItemRequest, pageable)
+            val itemResponse = itemService.findByCondition(selectItemRequest, pageable)
             handleSuccess(itemResponse)
         } catch (e: RuntimeException) {
             handleException(e)
