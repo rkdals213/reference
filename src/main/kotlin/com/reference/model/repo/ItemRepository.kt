@@ -89,7 +89,6 @@ class ItemRepositoryQDImpl(
     private fun priceLoe(highPrice: Int): BooleanExpression? {
         return if (highPrice == 0) null
         else QItem.item.price.loe(highPrice)
-
     }
 
     private fun priceGoe(lowPrice: Int): BooleanExpression? {
