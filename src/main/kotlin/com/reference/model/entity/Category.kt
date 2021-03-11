@@ -24,7 +24,7 @@ class Category {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     @JsonIgnore
-    var parent: Category? = null
+    var parent: Category = this
 
     @OneToMany(mappedBy = "parent")
     var child: MutableList<Category> = ArrayList()
