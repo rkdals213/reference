@@ -9,8 +9,8 @@ class Category {
     @Id
     @GeneratedValue
     @Column(name = "category_id")
-    var id: Long? = null
-    var name: String? = null
+    var id: Long = 0
+    var name: String = ""
 
     @ManyToMany
     @JoinTable(
