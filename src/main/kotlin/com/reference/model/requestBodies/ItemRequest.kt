@@ -5,12 +5,12 @@ import com.reference.model.entity.Book
 import com.reference.model.entity.Category
 import com.reference.model.entity.Movie
 
-class SelectItemRequest {
-    var dType: DType = DType.ALL
-    var keyword: String = ""
-    var lowPrice: Int = 0
+class SelectItemRequest (
+    var dType: DType = DType.ALL,
+    var keyword: String = "",
+    var lowPrice: Int = 0,
     var highPrice: Int = 0
-}
+)
 
 enum class DType(
     val value: String
@@ -25,18 +25,18 @@ enum class DType(
     }
 }
 
-class CreateItemRequest {
-    var name: String = ""
-    var price = 0
-    var stockQuantity = 0
-    var category: DType = DType.ALL
-    var artist: String = ""
-    var etc: String = ""
-    var author: String = ""
-    var isbn: String = ""
-    var director: String = ""
-    var actor: String = ""
-}
+class CreateItemRequest (
+    var name: String = "",
+    var price: Int = 0,
+    var stockQuantity: Int = 0,
+    var category: DType = DType.ALL,
+    var artist: String = "",
+    var etc: String = "",
+    var author: String = "",
+    var isbn: String = "",
+    var director: String = "",
+    var actor: String = "",
+)
 
 fun createMovie(createItemRequest: CreateItemRequest): Movie {
     val movie = Movie()

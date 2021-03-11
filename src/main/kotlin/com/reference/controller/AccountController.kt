@@ -16,7 +16,10 @@ class AccountController(
     fun regist(@RequestBody registRequest: RegistRequest): ResponseEntity<Map<String, Any?>> {
         return try {
             val registResponse = memberService.regist(registRequest)
-            handleSuccess(registResponse)
+            if (registResponse != null) {
+                return handleSuccess(registResponse)
+            }
+            handleFail("이미 가입된 이메일입니다.")
         } catch (e: RuntimeException) {
             handleException(e)
         }
@@ -26,7 +29,7 @@ class AccountController(
     fun checkEmail(@RequestParam email: String): ResponseEntity<Map<String, Any?>> {
         return try {
             val count = memberService.countByEmail(email)
-            if (count <= 0) handleFail("이미 가입된 이메일입니다")
+            if (count > 0) return handleFail("이미 가입된 이메일입니다")
             handleSuccess()
         } catch (e: RuntimeException) {
             handleException(e)

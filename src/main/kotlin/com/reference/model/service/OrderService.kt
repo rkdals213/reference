@@ -24,7 +24,7 @@ class OrderService(
     }
 
     @Transactional
-    fun registOrder(registOrderRequest: RegistOrderRequest): OrderResultResponse {
+    fun registOrder(registOrderRequest: RegistOrderRequest): OrderResultResponse? {
         val member: Member = memberRepository.findById(registOrderRequest.memberId).get()
         val delivery = Delivery()
         delivery.address = registOrderRequest.delivery.address
@@ -36,7 +36,7 @@ class OrderService(
             val orderItem: OrderItem = OrderItem.createOrderItem(item, item.price, i.qty)
 
             if (item.stockQuantity - i.qty < 0) {
-                return OrderResultResponse()
+                return null
             }
             item.stockQuantity = item.stockQuantity - i.qty
 
@@ -49,12 +49,12 @@ class OrderService(
     }
 
     @Transactional
-    fun cancelOrder(memberId: Long, itemId: Long): OrderResultResponse{
+    fun cancelOrder(memberId: Long, itemId: Long): OrderResultResponse? {
         val order = orderRepository.findById(itemId)
 
         if (order.isPresent) {
             val result = order.get()
-            if (result.member.id != memberId || result.status == OrderStatus.CANCEL) return OrderResultResponse()
+            if (result.member.id != memberId || result.status == OrderStatus.CANCEL) return null
             result.status = OrderStatus.CANCEL
             for (i in result.orderItems) {
                 val item = itemRepository.findById(i.item!!.id).get()
@@ -62,6 +62,6 @@ class OrderService(
             }
             return OrderResultResponse(result)
         }
-        return OrderResultResponse()
+        return null
     }
 }

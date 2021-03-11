@@ -20,7 +20,7 @@ class MemberService(
         val memberResult = memberRepository.findByEmail(loginRequest.email)
         if (memberResult.isEmpty) return null
         if (!BCrypt.checkpw(loginRequest.password, memberResult.get().password)) return null
-        return LoginResponse(memberResult.get().id, memberResult.get().name, memberResult.get().email, memberResult.get().address)
+        return LoginResponse(memberResult.get())
     }
 
     @Transactional
@@ -34,16 +34,16 @@ class MemberService(
         if (updateRequest.password.isNotEmpty()) memberResult.get().password = updateRequest.password
         memberResult.get().address = updateRequest.address
 
-        return UpdateResponse(memberResult.get().id, memberResult.get().name, memberResult.get().email, memberResult.get().address)
+        return UpdateResponse(memberResult.get())
     }
 
     fun countByEmail(email: String): Int {
         return memberRepository.countByEmail(email)
     }
 
-    fun regist(registRequest: RegistRequest): RegistResponse {
+    fun regist(registRequest: RegistRequest): RegistResponse? {
         val count = memberRepository.countByEmail(registRequest.email)
-        if (count > 0) return RegistResponse()
+        if (count > 0) return null
         val member = Member()
         member.email = registRequest.email
         member.name = registRequest.name
@@ -51,6 +51,6 @@ class MemberService(
         member.address = registRequest.address
 
         val result = memberRepository.save(member)
-        return RegistResponse(result.id, result.email, result.name, result.address)
+        return RegistResponse(result)
     }
 }

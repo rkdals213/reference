@@ -12,8 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class ItemService(
     val itemRepository: ItemRepository,
-    val categoryRepository: CategoryRepository,
-    val orderItemRepository: OrderItemRepository
+    val categoryRepository: CategoryRepository
 ) {
     fun findByCondition(selectItemRequest: SelectItemRequest, pageable: Pageable): ItemResponse {
         val result = itemRepository.findItemByCondition(selectItemRequest, pageable)
@@ -39,17 +38,6 @@ class ItemService(
             else -> {}
         }
     }
-
-//    @Transactional
-//    fun deleteItem(id: Long) {
-//        val item = itemRepository.findById(id).get()
-//
-//        item.deleteCategory()
-//        val orderItem = orderItemRepository.findByItem(item)
-//        if (orderItem.isPresent) orderItem.get().item = null
-//
-//        itemRepository.delete(item)
-//    }
 
     @Transactional
     fun deleteItem(id: Long) {
